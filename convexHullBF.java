@@ -2,21 +2,29 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.*;
+import java.awt.*;  
+import javax.swing.*;  
+import java.awt.geom.*;  
 
-public class convexHullBF {
+public class convexHullBF extends JPanel{
     static ArrayList<Point> points = new ArrayList<Point>();
     static Set<Point> finalsolutions = new HashSet<Point>();
 
+    
+   
+    
     public static void randompoints(int n) {
-        // random number generator includes number <=
+        // random number generator includes number <= n
         for (int i = 1; i <= n; i++) {
-            Random random = new Random();
-            int x = random.nextInt(20) - 10;
-            int y = random.nextInt(20) - 10;
+            int min=0;
+            int max=10;
+            int x = (int)Math.floor(Math.random()*(max-min+1)+min);
+            int y = (int)Math.floor(Math.random()*(max-min+1)+min);
             Point d = new Point(x, y);
             points.add(d);
         }
     }
+
 
     public static void PrintList(ArrayList<Point> List) {
         for (int i = 0; i <= List.size() - 1; i++) {
@@ -24,6 +32,7 @@ public class convexHullBF {
         }
         System.out.print("\n");
     }
+    
 
     // O(n)^3 using 3 for loops for brute force approach
     public static void BruteForce(ArrayList<Point> points, Set<Point> solution) {
@@ -79,24 +88,50 @@ public class convexHullBF {
 
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        int numOfPoints;
+        System.out.println("Please make your selection to solve the Convex Hull Problem");
+        int selection=s.nextInt();
+        if (selection == 1){
+            int numOfPoints;
         // Provide number of points
-        System.out.println("Input # of points: ");
-        numOfPoints = s.nextInt();
+            System.out.println("You have selected the BruteForce Solution!");
+            System.out.println("Input # of points: ");
+            numOfPoints = s.nextInt();
 
-        // create the given amount of points
-        randompoints(numOfPoints);
+            // create the given amount of points
+            randompoints(numOfPoints);
 
-        // close resource link
-        s.close();
-        PrintList(points);
+            // close resource link
+            s.close();
+            PrintList(points);
 
         // Call Brute Force solution
-        System.out.println("The Brute-force solution:");
-        BruteForce(points, finalsolutions);
+            System.out.println("The Brute-force solution:");
+            BruteForce(points, finalsolutions);
+
+        
 
         // Print solution list
         System.out.println(finalsolutions);
+        }
+        else if(selection == 2){
+            int numOfPoints;
+            // User provide number of points
+            System.out.println("Input # of points: ");
+            numOfPoints = s.nextInt();
+            // create the given amount of points
+            randompoints(numOfPoints);
+    
+            // close resource link
+            s.close();
+            PrintList(points);
+    
+            // Call Divide and Conquer solution
+            QuickHull.printHull(points,numOfPoints);
+
+        }
+        else{
+            System.exit(0);
+        }
 
     }
 }

@@ -1,16 +1,13 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*;
-import javax.swing.*;  
+ // Combined Quick Hull and Brute Force solutions into one program.
+ // 
 
-
-public class executeMe extends JPanel{
+public class executeMe{
     static ArrayList<Point> points = new ArrayList<Point>();
     static Set<Point> finalsolutions = new HashSet<Point>();
 
-    
-   
-    
     public static void randompoints(int n) {
         // random number generator includes number <= n
         for (int i = 1; i <= n; i++) {
@@ -87,6 +84,9 @@ public class executeMe extends JPanel{
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         System.out.println("Please make your selection to solve the Convex Hull Problem");
+        System.out.println("Enter (1) for BruteForce ");
+        System.out.println("Enter (2) for QuickHull ");
+        
         int selection=s.nextInt();
         if (selection == 1){
             int numOfPoints;

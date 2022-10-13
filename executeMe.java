@@ -48,7 +48,7 @@ public class executeMe {
         for (Point x : solution) {
             ordered.add(x);
         }
-        // get centroid
+        
         Point center = Center(solution);
         Collections.sort(ordered, (a, b) -> {
             double a1 = (Math.toDegrees(Math.atan2(a.GetX() - center.GetX(), a.GetY() - center.GetY())) + 360) % 360;

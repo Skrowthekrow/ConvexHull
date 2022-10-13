@@ -1,25 +1,62 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*;
- // Combined Quick Hull and Brute Force solutions into one program.
- // 
+// Combined Quick Hull and Brute Force solutions into one program.
+// 
 
-public class executeMe{
+public class executeMe {
     static ArrayList<Point> points = new ArrayList<Point>();
     static Set<Point> finalsolutions = new HashSet<Point>();
 
     public static void randompoints(int n) {
         // random number generator includes number <= n
         for (int i = 1; i <= n; i++) {
-            int min=0;
-            int max=10;
-            int x = (int)Math.floor(Math.random()*(max-min+1)+min);
-            int y = (int)Math.floor(Math.random()*(max-min+1)+min);
+            int min = 0;
+            int max = 10;
+            int x = (int) Math.floor(Math.random() * (max - min + 1) + min);
+            int y = (int) Math.floor(Math.random() * (max - min + 1) + min);
             Point d = new Point(x, y);
             points.add(d);
         }
     }
 
+    public static Point Center(Set<Point> solution) {
+        ArrayList<Point> ordered = new ArrayList<Point>();
+        int xtotal = 0;
+        int ytotal = 0;
+        for (Point x : solution) {
+            ordered.add(x);
+        }
+        // average all the xy points
+        for (Point s : ordered) {
+            int temp = s.GetX();
+            int temp2 = s.GetY();
+
+            xtotal += temp;
+            ytotal += temp2;
+        }
+        xtotal = xtotal / ordered.size();
+        ytotal = xtotal / ordered.size();
+        Point center = new Point(xtotal, ytotal);
+
+        return center;
+        // average^
+    }
+
+    public static void sortPoints(Set<Point> solution) {
+        ArrayList<Point> ordered = new ArrayList<Point>();
+        for (Point x : solution) {
+            ordered.add(x);
+        }
+        // get centroid
+        Point center = Center(solution);
+        Collections.sort(ordered, (a, b) -> {
+            double a1 = (Math.toDegrees(Math.atan2(a.GetX() - center.GetX(), a.GetY() - center.GetY())) + 360) % 360;
+            double a2 = (Math.toDegrees(Math.atan2(b.GetX() - center.GetX(), b.GetY() - center.GetY())) + 360) % 360;
+            return (int) (a1 - a2);
+        });
+        System.out.print(ordered);
+    }
 
     public static void PrintList(ArrayList<Point> List) {
         for (int i = 0; i <= List.size() - 1; i++) {
@@ -27,7 +64,6 @@ public class executeMe{
         }
         System.out.print("\n");
     }
-    
 
     // O(n)^3 using 3 for loops for brute force approach
     public static void BruteForce(ArrayList<Point> points, Set<Point> solution) {
@@ -86,11 +122,11 @@ public class executeMe{
         System.out.println("Please make your selection to solve the Convex Hull Problem");
         System.out.println("Enter (1) for BruteForce ");
         System.out.println("Enter (2) for QuickHull ");
-        
-        int selection=s.nextInt();
-        if (selection == 1){
+
+        int selection = s.nextInt();
+        if (selection == 1) {
             int numOfPoints;
-        // Provide number of points
+            // Provide number of points
             System.out.println("You have selected the BruteForce Solution!");
             System.out.println("Input # of points: ");
             numOfPoints = s.nextInt();
@@ -102,32 +138,30 @@ public class executeMe{
             s.close();
             PrintList(points);
 
-        // Call Brute Force solution
+            // Call Brute Force solution
             System.out.println("The Brute-force solution:");
             BruteForce(points, finalsolutions);
 
-        
-
-        // Print solution list
-        System.out.println(finalsolutions);
-        }
-        else if(selection == 2){
+            // Print solution list
+            System.out.println(finalsolutions);
+            System.out.println("Here is the solution in counter clock-wise order below");
+            sortPoints(finalsolutions);
+        } else if (selection == 2) {
             int numOfPoints;
             // User provide number of points
             System.out.println("Input # of points: ");
             numOfPoints = s.nextInt();
             // create the given amount of points
             randompoints(numOfPoints);
-    
+
             // close resource link
             s.close();
             PrintList(points);
-    
-            // Call Divide and Conquer solution
-            QuickHull.printHull(points,numOfPoints);
 
-        }
-        else{
+            // Call Divide and Conquer solution
+            QuickHull.printHull(points, numOfPoints);
+
+        } else {
             System.exit(0);
         }
 

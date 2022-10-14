@@ -16,9 +16,13 @@ public class executeMe {
             int x = (int) Math.floor(Math.random() * (max - min + 1) + min);
             int y = (int) Math.floor(Math.random() * (max - min + 1) + min);
             Point d = new Point(x, y);
-            points.add(d);
+            
+                points.add(d);
+
+             
         }
     }
+
 
     public static Point Center(Set<Point> solution) {
         ArrayList<Point> ordered = new ArrayList<Point>();
@@ -48,12 +52,12 @@ public class executeMe {
         for (Point x : solution) {
             ordered.add(x);
         }
-        
+
         Point center = Center(solution);
         Collections.sort(ordered, (a, b) -> {
-            double a1 = (Math.toDegrees(Math.atan2(a.GetX() - center.GetX(), a.GetY() - center.GetY())) + 360) % 360;
-            double a2 = (Math.toDegrees(Math.atan2(b.GetX() - center.GetX(), b.GetY() - center.GetY())) + 360) % 360;
-            return (int) (a1 - a2);
+            double s1 = (Math.toDegrees(Math.atan2(a.GetX() - center.GetX(), a.GetY() - center.GetY())) + 360) % 360;
+            double s2 = (Math.toDegrees(Math.atan2(b.GetX() - center.GetX(), b.GetY() - center.GetY())) + 360) % 360;
+            return (int) (s1 - s2);
         });
         System.out.print(ordered);
     }
